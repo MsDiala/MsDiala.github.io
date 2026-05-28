@@ -527,10 +527,12 @@
     }
 
     .p-diamond {
-      color: var(--gold);
-      font-size: 0.6rem;
-      margin-top: 0.3rem;
+      width: 8px;
+      height: 8px;
+      background: linear-gradient(135deg, var(--gold), var(--gold-lt));
+      transform: rotate(45deg);
       flex-shrink: 0;
+      margin-top: 0.45rem;
     }
 
     .p-title {
@@ -574,13 +576,14 @@
     .ti::before {
       content: '';
       position: absolute;
-      left: -0.28rem;
-      top: 0.6rem;
-      width: 0.56rem;
-      height: 0.56rem;
-      background: var(--cream);
-      border: 1px solid var(--gold);
-      transform: rotate(45deg);
+      left: -4px;
+      top: 0.58rem;
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--gold), var(--gold-lt));
+      box-shadow: 0 0 0 3px var(--cream), 0 0 12px rgba(154, 122, 69, 0.4);
+      transform: none;
     }
 
     .ti-left {
@@ -642,11 +645,14 @@
     }
 
     .ti-desc ul li::before {
-      content: '—';
+      content: '';
       position: absolute;
-      left: 0;
-      color: var(--gold-lt);
-      font-size: 0.8rem;
+      left: 0.12rem;
+      top: 0.63em;
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--gold), var(--gold-lt));
     }
 
     /* SKILLS */
@@ -1191,6 +1197,125 @@
         border-right: none;
       }
     }
+
+    /* THEME TOGGLE BUTTON */
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+
+    .theme-btn {
+      width: 1.75rem;
+      height: 1.75rem;
+      background: none;
+      border: 1px solid var(--border);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: border-color 0.3s;
+    }
+
+    .theme-btn:hover {
+      border-color: var(--gold);
+    }
+
+    .theme-icon {
+      display: block;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      border: 1.5px solid var(--muted);
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.3s;
+    }
+
+    .theme-btn:hover .theme-icon {
+      border-color: var(--gold);
+    }
+
+    .theme-icon::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 50%;
+      height: 100%;
+      background: var(--muted);
+      transition: background 0.3s, right 0.4s ease, left 0.4s ease;
+    }
+
+    .theme-btn:hover .theme-icon::before {
+      background: var(--gold);
+    }
+
+    [data-theme="dark"] .theme-icon::before {
+      right: auto;
+      left: 0;
+    }
+
+    /* DARK THEME */
+    [data-theme="dark"] {
+      --cream: #111009;
+      --cream-2: #191613;
+      --cream-3: #201d19;
+      --charcoal: #ede8e0;
+      --charcoal-2: #ccc7be;
+      --gold: #c4a06a;
+      --gold-lt: #d4b483;
+      --gold-pale: #3a3020;
+      --muted: #7a7670;
+      --border: rgba(196, 160, 106, 0.2);
+      --border-lt: rgba(196, 160, 106, 0.11);
+    }
+
+    [data-theme="dark"] nav {
+      background: rgba(17, 16, 9, 0.96);
+    }
+
+    [data-theme="dark"] #contact-s {
+      background: #0c0a08;
+    }
+
+    [data-theme="dark"] footer {
+      background: #0c0a08;
+      border-top-color: rgba(255, 255, 255, 0.04);
+    }
+
+    [data-theme="dark"] .c-head {
+      color: #ede8e0;
+    }
+
+    [data-theme="dark"] .c-sub {
+      color: rgba(237, 232, 224, 0.5);
+    }
+
+    [data-theme="dark"] .c-link {
+      color: #ede8e0;
+    }
+
+    [data-theme="dark"] .f-name {
+      color: rgba(237, 232, 224, 0.3);
+    }
+
+    [data-theme="dark"] .f-copy {
+      color: rgba(237, 232, 224, 0.18);
+    }
+
+    [data-theme="dark"] .f-links a {
+      color: rgba(237, 232, 224, 0.25);
+    }
+
+    [data-theme="dark"] .ti::before {
+      box-shadow: 0 0 0 3px var(--cream), 0 0 12px rgba(196, 160, 106, 0.45);
+    }
+
+    [data-theme="dark"] #scroll-top {
+      background: #1a1714;
+    }
   </style>
 </head>
 
@@ -1211,10 +1336,15 @@
       <li><a href="#certifications">Certifications</a></li>
       <li><a href="#contact-s">Contact</a></li>
     </ul>
-    <button class="nav-burger" id="nav-burger" aria-label="Toggle navigation" aria-expanded="false"
-      aria-controls="nav-links">
-      <span></span><span></span><span></span>
-    </button>
+    <div class="nav-right">
+      <button id="theme-toggle" class="theme-btn" aria-label="Toggle dark mode">
+        <span class="theme-icon"></span>
+      </button>
+      <button class="nav-burger" id="nav-burger" aria-label="Toggle navigation" aria-expanded="false"
+        aria-controls="nav-links">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
   </nav>
 
   <!-- HERO -->
@@ -1287,32 +1417,32 @@
             confidence in data and AI. Teaching is not separate from my technical work; it is an extension of it.</p>
         </div>
         <div class="pillars r d1">
-          <div class="pillar"><span class="p-diamond" aria-hidden="true">◆</span>
+          <div class="pillar"><span class="p-diamond" aria-hidden="true"></span>
             <div>
               <div class="p-title">Artificial Intelligence &amp; ML</div>
               <div class="p-sub">Deep Learning · NLP · Computer Vision · PyTorch · Transformers · RAG</div>
             </div>
           </div>
-          <div class="pillar"><span class="p-diamond" aria-hidden="true">◆</span>
+          <div class="pillar"><span class="p-diamond" aria-hidden="true"></span>
             <div>
               <div class="p-title">Data Engineering</div>
               <div class="p-sub">Azure ADF · SSIS · ETL · Data Warehousing · Spark · Kafka · Airflow</div>
             </div>
           </div>
-          <div class="pillar"><span class="p-diamond" aria-hidden="true">◆</span>
+          <div class="pillar"><span class="p-diamond" aria-hidden="true"></span>
             <div>
               <div class="p-title">Applied &amp; Computational Mathematics</div>
               <div class="p-sub">Stochastic Modeling · Monte Carlo · Statistical Analysis · Optimization · Differential
                 Equations · Numerical Methods · Computational Analysis</div>
             </div>
           </div>
-          <div class="pillar"><span class="p-diamond" aria-hidden="true">◆</span>
+          <div class="pillar"><span class="p-diamond" aria-hidden="true"></span>
             <div>
               <div class="p-title">MLOps &amp; Deployment</div>
               <div class="p-sub">Docker · FastAPI · GitHub Actions · Reproducible Pipelines</div>
             </div>
           </div>
-          <div class="pillar"><span class="p-diamond" aria-hidden="true">◆</span>
+          <div class="pillar"><span class="p-diamond" aria-hidden="true"></span>
             <div>
               <div class="p-title">Education &amp; Mentorship</div>
               <div class="p-sub">AI Programs · Data Analytics · Bootcamps · University Mentoring</div>
@@ -1900,6 +2030,18 @@
   <button id="scroll-top" aria-label="Scroll to top">↑</button>
 
   <script>
+    // Theme toggle
+    const themeToggle = document.getElementById('theme-toggle');
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme) document.documentElement.setAttribute('data-theme', savedTheme);
+
+    themeToggle.addEventListener('click', () => {
+      const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+      const next = isDark ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+    });
+
     // Reading progress bar
     const progressBar = document.getElementById('progress-bar');
     function updateProgress() {
